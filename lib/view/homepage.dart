@@ -51,12 +51,12 @@ class _HomePageState extends State<HomePage> {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.inversePrimary,
                 gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                  Theme.of(context).colorScheme.inversePrimary,
-                  Colors.white
-                ]),
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Theme.of(context).colorScheme.inversePrimary,
+                      Colors.white
+                    ]),
               ),
               child: Container(
                 decoration: BoxDecoration(
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                           icon: const Icon(Icons.local_parking_rounded),
                           iconSize: 45.0,
                           onPressed: () {
-                            print('test');
+                            Navigator.pushNamed(context, '/parking');
                           },
                         ),
                         const Text('Parking Lots'),
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                           icon: const Icon(Icons.directions_car_rounded),
                           iconSize: 45.0,
                           onPressed: () {
-                            print('test');
+                            Navigator.pushNamed(context, '/car_info');
                           },
                         ),
                         const Text('Car Information'),
@@ -101,22 +101,72 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.local_parking_rounded),
+                          icon: const Icon(Icons.history_rounded),
                           iconSize: 45.0,
                           onPressed: () {
                             print('test');
                           },
                         ),
-                        const Text('Parking Lots'),
+                        const Text('History'),
                       ],
                     ),
                   ],
                 ),
               )),
-          Container(
-            color: Theme.of(context).colorScheme.primary,
-            child: const Text('This is the homepage'),
-          ),
+          const SizedBox(height: 12.5),
+          const Details()
+        ],
+      ),
+    );
+  }
+}
+
+class Details extends StatefulWidget {
+  const Details({super.key});
+
+  @override
+  State<Details> createState() => _DetailsState();
+}
+
+class _DetailsState extends State<Details> {
+  final String _carPlateNumber = 'ABC1234';
+  final String _carModel = 'Proton X70';
+  final String _location = 'Slot 1';
+  final String _timeIn = '12:00 PM';
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 3),
+            ),
+          ]),
+      padding: const EdgeInsets.all(12.5),
+      margin: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Details',
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          Text('Car Plate Number : $_carPlateNumber'),
+          const SizedBox(height: 5),
+          Text('Car Model : $_carModel'),
+          const SizedBox(height: 5),
+          Text('Car Park Location : $_location'),
+          const SizedBox(height: 5),
+          Text('Time In : $_timeIn'),
+          const SizedBox(height: 5),
+          Text('Time Out : -'),
+          const SizedBox(height: 5),
+          Text('Total Duration : -'),
         ],
       ),
     );
