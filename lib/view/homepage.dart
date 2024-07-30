@@ -164,9 +164,9 @@ class _DetailsState extends State<Details> {
           const SizedBox(height: 5),
           Text('Time In : $_timeIn'),
           const SizedBox(height: 5),
-          Text('Time Out : -'),
+          const Text('Time Out : -'),
           const SizedBox(height: 5),
-          Text('Total Duration : -'),
+          const Text('Total Duration : -'),
         ],
       ),
     );
