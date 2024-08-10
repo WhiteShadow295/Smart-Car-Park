@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final String _welcomeMessage = 'Welcome Back,';
   final String _username = 'User !';
-  final String _title = 'Car Parking System';
+  final String _title = 'ParkWise';
 
   @override
   Widget build(BuildContext context) {
