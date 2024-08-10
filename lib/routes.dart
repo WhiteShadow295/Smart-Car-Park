@@ -14,6 +14,6 @@ const String carInfoRoute = '/car_info';
 final Map<String, WidgetBuilder> routes = {
   loginRoute: (context) => const LoginPage(),
   homeRoute: (context) => const HomePage(),
-  parkingRoute: (context) => const ParkingPage(),
+  parkingRoute: (context) => ParkingPage(),
   carInfoRoute: (context) => const CarInfoPage()
 };
