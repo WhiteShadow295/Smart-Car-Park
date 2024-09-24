@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "134358345938",
+    "firebase_url": "https://practical-iot-295-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "practical-iot-295",
+    "storage_bucket": "practical-iot-295.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134358345938:android:8425ee0c0904da4889250b",
+        "android_client_info": {
+          "package_name": "com.example.smart_car_park"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBMLNikfZc3b_rBh9WjfrYY3xTJOEMtT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

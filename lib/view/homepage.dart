@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:smart_car_park/services/auth_services.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+   const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -9,7 +10,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final String _welcomeMessage = 'Welcome Back,';
-  final String _username = 'User !';
+  final String _username = AuthService().getCurrentUser();
   final String _title = 'ParkWise';
 
   @override
@@ -20,11 +21,11 @@ class _HomePageState extends State<HomePage> {
         title: Text(_title),
         actions: [
           IconButton(
-            icon: const Icon(Icons.account_circle_rounded),
+            icon: const Icon(Icons.logout_rounded),
             padding: const EdgeInsets.only(right: 15.0),
             iconSize: 35.0,
-            onPressed: () {
-              Navigator.pushNamed(context, '/login');
+            onPressed: () async{
+              await AuthService().signout(context: context);
             },
           ),
         ],
