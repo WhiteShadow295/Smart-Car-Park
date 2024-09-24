@@ -57,6 +57,8 @@ class AuthService {
         message = 'No user found for that email.';
       } else if (e.code == 'invalid-credential') {
         message = 'Wrong password provided for that user.';
+      } else {
+        message = 'Enter a valid email and password';
       }
       Fluttertoast.showToast(
         msg: message,
@@ -79,7 +81,7 @@ class AuthService {
   }
 
   String getCurrentUser() {
-    return FirebaseAuth.instance.currentUser?.email ?? 'User';
+    return FirebaseAuth.instance.currentUser?.email ?? 'User' ;
   }
 
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CarInfoPage extends StatelessWidget {
-  const CarInfoPage({super.key});
+class Analytics extends StatelessWidget {
+  const Analytics({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Car Information'),
+        title: const Text('Analytics'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: const Center(
@@ -15,7 +15,7 @@ class CarInfoPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Car Information',
+              'Analytics',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

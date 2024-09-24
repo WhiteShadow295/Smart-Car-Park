@@ -26,13 +26,12 @@ class SignupPage extends StatelessWidget {
             child: Column(
               children: [
                 const Center(
-                  child: Text(
-                    'Register Account',
-                    style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 32)),
-                  ),
+                  child: Text('Register Account',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 32)),
+                ),
                 const SizedBox(
                   height: 80,
                 ),
@@ -68,7 +67,7 @@ class SignupPage extends StatelessWidget {
           controller: _emailController,
           decoration: InputDecoration(
               filled: true,
-              hintText: 'mahdiforwork@gmail.com',
+              hintText: 'example@gmail.com',
               hintStyle: const TextStyle(
                   color: Color(0xff6A6A6A),
                   fontWeight: FontWeight.normal,
@@ -112,7 +111,7 @@ class SignupPage extends StatelessWidget {
   Widget _signup(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xff0D6EFD),
+        backgroundColor: Colors.lightBlue,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
         ),
@@ -125,7 +124,9 @@ class SignupPage extends StatelessWidget {
             password: _passwordController.text,
             context: context);
       },
-      child: const Text("Sign Up"),
+      child: const Text("Sign Up",
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
     );
   }
 
@@ -145,8 +146,9 @@ class SignupPage extends StatelessWidget {
             TextSpan(
                 text: "Log In",
                 style: const TextStyle(
-                    color: Color(0xff1A1D1E),
+                    color: Color.fromARGB(255, 72, 116, 131),
                     fontWeight: FontWeight.normal,
+                    decoration: TextDecoration.underline,
                     fontSize: 16),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {

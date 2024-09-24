@@ -90,13 +90,13 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.directions_car_rounded),
+                          icon: const Icon(Icons.analytics_rounded),
                           iconSize: 45.0,
                           onPressed: () {
-                            Navigator.pushNamed(context, '/car_info');
+                            Navigator.pushNamed(context, '/analytics');
                           },
                         ),
-                        const Text('Car Information'),
+                        const Text('Analytics'),
                       ],
                     ),
                     Column(

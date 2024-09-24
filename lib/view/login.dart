@@ -150,8 +150,9 @@ class LoginPage extends StatelessWidget {
             TextSpan(
                 text: "Create Account",
                 style: const TextStyle(
-                    color: Color(0xff1A1D1E),
+                    color: Color.fromARGB(255, 63, 101, 114),
                     fontWeight: FontWeight.normal,
+                    decoration: TextDecoration.underline,
                     fontSize: 16),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
