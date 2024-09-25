@@ -183,7 +183,7 @@ class _ParkingPageState extends State<ParkingPage> {
     int occupiedCount = _getCarparkNum();
 
     if (occupiedCount == 0) {
-      return 'Occupied';
+      return 'Full';
     } else if (occupiedCount == 1) {
       return 'Almost Full';
     } else {

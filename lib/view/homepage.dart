@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                           icon: const Icon(Icons.history_rounded),
                           iconSize: 45.0,
                           onPressed: () {
-                            // print('test');
+                            Navigator.pushNamed(context, '/history');
                           },
                         ),
                         const Text('History'),
@@ -150,8 +150,11 @@ class _DetailsState extends State<Details> {
   late String _carPlateNumber = '';
   late String _carModel = '';
   late String _timeIn = '';
+  late String _timeOut = '';
+  late dynamic _totalDuration;
 
-  final DatabaseReference _dbRef = FirebaseDatabase.instance.ref().child('carpark_history');
+  final DatabaseReference _dbRef =
+      FirebaseDatabase.instance.ref().child('carpark_history');
   Map<String, dynamic> carparkData = {};
 
   @override
@@ -162,24 +165,36 @@ class _DetailsState extends State<Details> {
   }
 
   void listenToCarparkData(String uid) {
-    _dbRef.orderByChild('uid').equalTo(uid).onValue.listen((DatabaseEvent event) {
+    _dbRef.orderByChild('uid').equalTo(uid).onValue.listen(
+        (DatabaseEvent event) {
       if (event.snapshot.value != null) {
         setState(() {
           // Extracting data from the snapshot
-          Map<dynamic, dynamic> data = event.snapshot.value as Map<dynamic, dynamic>;
+          Map<dynamic, dynamic> data =
+              event.snapshot.value as Map<dynamic, dynamic>;
 
           // Assuming the data has only one key-value pair for the UID
           data.forEach((key, value) {
             if (value != null && value is Map) {
-              _carPlateNumber = value['car_plate_number'] ?? 'N/A';
-              _carModel = value['car_model'] ?? 'N/A';
+              _carPlateNumber = value['car_plate_number'] ?? '-';
+              _carModel = value['car_model'] ?? '-';
 
               // Check for the latest check-in record
-              List<dynamic>? checkInOutRecords = value['checkInOutRecords'] as List<dynamic>?;
+              List<dynamic>? checkInOutRecords =
+                  value['checkInOutRecords'] as List<dynamic>?;
               if (checkInOutRecords != null && checkInOutRecords.isNotEmpty) {
-                var latestRecord = checkInOutRecords.lastWhere((record) => record != null, orElse: () => null);
+                var latestRecord = checkInOutRecords
+                    .lastWhere((record) => record != null, orElse: () => null);
                 if (latestRecord != null && latestRecord is Map) {
-                  _timeIn = latestRecord['checkInTime'] ?? 'N/A';
+                  _timeIn = latestRecord['checkInTime'] ?? '-';
+                  _timeOut = latestRecord['checkOutTime'] ?? '-';
+
+                  if (_timeOut == '-') {
+                    _totalDuration =
+                        DateTime.now().difference(DateTime.parse(_timeIn));
+                  } else {
+                    _totalDuration = DateTime.parse(_timeOut).difference(DateTime.parse(_timeIn));
+                  }
                 }
               }
             }
@@ -226,12 +241,11 @@ class _DetailsState extends State<Details> {
           const SizedBox(height: 5),
           Text('Time In: $_timeIn'),
           const SizedBox(height: 5),
-          const Text('Time Out: -'),
+          Text('Time Out: $_timeOut'),
           const SizedBox(height: 5),
-          const Text('Total Duration: -'),
+          Text('Total Duration: $_totalDuration'),
         ],
       ),
     );
   }
 }
-
