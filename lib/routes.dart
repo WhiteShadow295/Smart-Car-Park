@@ -17,6 +17,6 @@ final Map<String, WidgetBuilder> routes = {
   loginRoute: (context) => LoginPage(),
   signupRoute: (context) => SignupPage(),
   homeRoute: (context) => const HomePage(),
-  parkingRoute: (context) => ParkingPage(),
+  parkingRoute: (context) => const ParkingPage(),
   analyticsRoute: (context) => const Analytics(),
 };

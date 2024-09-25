@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class ParkingPage extends StatefulWidget {
-  ParkingPage({super.key});
+  const ParkingPage({super.key});
 
   @override
   _ParkingPageState createState() => _ParkingPageState();
@@ -16,7 +15,7 @@ class _ParkingPageState extends State<ParkingPage> {
     true,
     true,
     true
-  ]; // Default values before fetching
+  ]; 
 
   final DatabaseReference _databaseReference =
       FirebaseDatabase.instance.ref().child("Carpark");
@@ -175,7 +174,7 @@ class _ParkingPageState extends State<ParkingPage> {
   }
 
   int _getCarparkNum() {
-    int occupiedCount = lotStatus.where((status) => status == false).length;
+    int occupiedCount = lotStatus.where((status) => status == true).length;
     return occupiedCount;
   }
 
@@ -183,9 +182,9 @@ class _ParkingPageState extends State<ParkingPage> {
   String _getAvailabilityText() {
     int occupiedCount = _getCarparkNum();
 
-    if (occupiedCount == 4) {
+    if (occupiedCount == 0) {
       return 'Occupied';
-    } else if (occupiedCount == 3) {
+    } else if (occupiedCount == 1) {
       return 'Almost Full';
     } else {
       return 'Available';
@@ -196,9 +195,9 @@ class _ParkingPageState extends State<ParkingPage> {
   Color _getAvailabilityColor() {
     int occupiedCount = _getCarparkNum();
 
-    if (occupiedCount == 4) {
+    if (occupiedCount == 0) {
       return Colors.red;
-    } else if (occupiedCount == 3) {
+    } else if (occupiedCount == 1) {
       return Colors.orange;
     } else {
       return Colors.green;

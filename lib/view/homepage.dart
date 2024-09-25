@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:smart_car_park/services/auth_services.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: HomePage(),
+    );
+  }
+}
+
 class HomePage extends StatefulWidget {
-   const HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,7 +41,7 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.logout_rounded),
             padding: const EdgeInsets.only(right: 15.0),
             iconSize: 35.0,
-            onPressed: () async{
+            onPressed: () async {
               await AuthService().signout(context: context);
             },
           ),
@@ -105,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                           icon: const Icon(Icons.history_rounded),
                           iconSize: 45.0,
                           onPressed: () {
-                            print('test');
+                            // print('test');
                           },
                         ),
                         const Text('History'),
@@ -130,10 +147,56 @@ class Details extends StatefulWidget {
 }
 
 class _DetailsState extends State<Details> {
-  final String _carPlateNumber = 'ABC1234';
-  final String _carModel = 'Proton X70';
-  final String _location = 'Slot 1';
-  final String _timeIn = '12:00 PM';
+  late String _carPlateNumber = '';
+  late String _carModel = '';
+  late String _timeIn = '';
+
+  final DatabaseReference _dbRef = FirebaseDatabase.instance.ref().child('carpark_history');
+  Map<String, dynamic> carparkData = {};
+
+  @override
+  void initState() {
+    super.initState();
+    // Example UID you want to search for
+    listenToCarparkData(AuthService().getUserUid());
+  }
+
+  void listenToCarparkData(String uid) {
+    _dbRef.orderByChild('uid').equalTo(uid).onValue.listen((DatabaseEvent event) {
+      if (event.snapshot.value != null) {
+        setState(() {
+          // Extracting data from the snapshot
+          Map<dynamic, dynamic> data = event.snapshot.value as Map<dynamic, dynamic>;
+
+          // Assuming the data has only one key-value pair for the UID
+          data.forEach((key, value) {
+            if (value != null && value is Map) {
+              _carPlateNumber = value['car_plate_number'] ?? 'N/A';
+              _carModel = value['car_model'] ?? 'N/A';
+
+              // Check for the latest check-in record
+              List<dynamic>? checkInOutRecords = value['checkInOutRecords'] as List<dynamic>?;
+              if (checkInOutRecords != null && checkInOutRecords.isNotEmpty) {
+                var latestRecord = checkInOutRecords.lastWhere((record) => record != null, orElse: () => null);
+                if (latestRecord != null && latestRecord is Map) {
+                  _timeIn = latestRecord['checkInTime'] ?? 'N/A';
+                }
+              }
+            }
+          });
+        });
+      }
+    }, onError: (Object error) {
+      print("Error listening to data: $error");
+    });
+  }
+
+  @override
+  void dispose() {
+    // Always remove the listener when the widget is disposed
+    _dbRef.onValue.drain();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,19 +220,18 @@ class _DetailsState extends State<Details> {
           const Text('Details',
               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
-          Text('Car Plate Number : $_carPlateNumber'),
+          Text('Car Plate Number: $_carPlateNumber'),
           const SizedBox(height: 5),
-          Text('Car Model : $_carModel'),
+          Text('Car Model: $_carModel'),
           const SizedBox(height: 5),
-          Text('Car Park Location : $_location'),
+          Text('Time In: $_timeIn'),
           const SizedBox(height: 5),
-          Text('Time In : $_timeIn'),
+          const Text('Time Out: -'),
           const SizedBox(height: 5),
-          const Text('Time Out : -'),
-          const SizedBox(height: 5),
-          const Text('Total Duration : -'),
+          const Text('Total Duration: -'),
         ],
       ),
     );
   }
 }
+

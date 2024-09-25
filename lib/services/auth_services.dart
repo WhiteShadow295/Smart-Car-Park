@@ -5,6 +5,7 @@ import 'package:smart_car_park/view/homepage.dart';
 import 'package:smart_car_park/view/login.dart';
 
 class AuthService {
+  
   Future<void> signup(
       {required String email,
       required String password,
@@ -34,7 +35,7 @@ class AuthService {
         fontSize: 14.0,
       );
     } catch (e) {
-      print(e);
+      rethrow;
     }
   }
 
@@ -69,7 +70,7 @@ class AuthService {
         fontSize: 14.0,
       );
     } catch (e) {
-      print(e);
+      rethrow;
     }
   }
 
@@ -83,6 +84,11 @@ class AuthService {
   String getCurrentUser() {
     return FirebaseAuth.instance.currentUser?.email ?? 'User' ;
   }
+
+  String getUserUid() {
+    return FirebaseAuth.instance.currentUser!.uid ;
+  }
+
 
 }
 
