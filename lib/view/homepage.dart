@@ -151,7 +151,7 @@ class _DetailsState extends State<Details> {
   late String _carModel = '';
   late String _timeIn = '';
   late String _timeOut = '';
-  late dynamic _totalDuration;
+  late String _totalDuration = '';
 
   final DatabaseReference _dbRef =
       FirebaseDatabase.instance.ref().child('carpark_history');
@@ -190,10 +190,17 @@ class _DetailsState extends State<Details> {
                   _timeOut = latestRecord['checkOutTime'] ?? '-';
 
                   if (_timeOut == '-') {
-                    _totalDuration =
-                        DateTime.now().difference(DateTime.parse(_timeIn));
+                    _totalDuration = DateTime.now()
+                        .difference(DateTime.parse(_timeIn))
+                        .toString()
+                        .split('.')
+                        .first;
                   } else {
-                    _totalDuration = DateTime.parse(_timeOut).difference(DateTime.parse(_timeIn));
+                    _totalDuration = DateTime.parse(_timeOut)
+                        .difference(DateTime.parse(_timeIn))
+                        .toString()
+                        .split('.')
+                        .first;
                   }
                 }
               }
@@ -234,15 +241,15 @@ class _DetailsState extends State<Details> {
         children: [
           const Text('Details',
               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
           Text('Car Plate Number: $_carPlateNumber'),
-          const SizedBox(height: 5),
+          const SizedBox(height: 7),
           Text('Car Model: $_carModel'),
-          const SizedBox(height: 5),
+          const SizedBox(height: 7),
           Text('Time In: $_timeIn'),
-          const SizedBox(height: 5),
+          const SizedBox(height: 7),
           Text('Time Out: $_timeOut'),
-          const SizedBox(height: 5),
+          const SizedBox(height: 7),
           Text('Total Duration: $_totalDuration'),
         ],
       ),
