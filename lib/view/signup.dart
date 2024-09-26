@@ -7,6 +7,7 @@ class SignupPage extends StatelessWidget {
   SignupPage({super.key});
 
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -33,7 +34,11 @@ class SignupPage extends StatelessWidget {
                           fontSize: 32)),
                 ),
                 const SizedBox(
-                  height: 80,
+                  height: 90,
+                ),
+                _username(),
+                const SizedBox(
+                  height: 20,
                 ),
                 _emailAddress(),
                 const SizedBox(
@@ -68,6 +73,37 @@ class SignupPage extends StatelessWidget {
           decoration: InputDecoration(
               filled: true,
               hintText: 'example@gmail.com',
+              hintStyle: const TextStyle(
+                  color: Color(0xff6A6A6A),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14),
+              fillColor: const Color(0xffF7F7F9),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(14))),
+        )
+      ],
+    );
+  }
+
+  Widget _username() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Username',
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.normal,
+                fontSize: 16)),
+        const SizedBox(
+          height: 16,
+        ),
+        TextField(
+          controller: _usernameController,
+          decoration: InputDecoration(
+              filled: true,
+              hintText: 'John Doe',
               hintStyle: const TextStyle(
                   color: Color(0xff6A6A6A),
                   fontWeight: FontWeight.normal,
@@ -122,6 +158,7 @@ class SignupPage extends StatelessWidget {
         await AuthService().signup(
             email: _emailController.text,
             password: _passwordController.text,
+            name: _usernameController.text,
             context: context);
       },
       child: const Text("Sign Up",

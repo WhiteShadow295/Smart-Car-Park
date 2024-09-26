@@ -5,14 +5,17 @@ import 'package:smart_car_park/view/homepage.dart';
 import 'package:smart_car_park/view/login.dart';
 
 class AuthService {
-  
   Future<void> signup(
       {required String email,
       required String password,
+      required String name,
       required BuildContext context}) async {
     try {
-      await FirebaseAuth.instance
+      UserCredential result = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+
+      User user = result.user!;
+      user.updateProfile(displayName: name);
 
       await Future.delayed(const Duration(seconds: 1));
       Navigator.pushReplacement(
@@ -82,13 +85,10 @@ class AuthService {
   }
 
   String getCurrentUser() {
-    return FirebaseAuth.instance.currentUser?.email ?? 'User' ;
+    return FirebaseAuth.instance.currentUser?.displayName ?? 'User';
   }
 
   String getUserUid() {
-    return FirebaseAuth.instance.currentUser!.uid ;
+    return FirebaseAuth.instance.currentUser!.uid;
   }
-
-
 }
-
