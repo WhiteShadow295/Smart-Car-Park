@@ -1,16 +1,17 @@
 # smart_car_park
 
-A new Flutter project.
+This is application for smart cark park where the driver can use this application to find the empty slot.
 
 ## Getting Started
+1. Create a realtime database from firebase
+2. Replace the API key in the .env file
+3. run the following code
 
-This project is a starting point for a Flutter application.
+```flutter
+flutter run start
+```
 
 A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Hardware's code](https://docs.flutter.dev/get-started/codelab)
+- [Video](https://youtube.com/shorts/8dfMWQ1Wdmo?feature=share)
